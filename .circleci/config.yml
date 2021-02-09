@@ -1,11 +1,33 @@
-version: 2.1
-orbs:
-  node: circleci/node@3.0.0
-  heroku: circleci/heroku@0.0.10
-workflows:
-  node-tests:
+version: 2.0
+jobs:
+  build:
+    working_directory: ~/reactDocker
+    docker:
+      - image: circleci/node:14-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+      - run: npm install
+      - run:
+          name: Install dependencies and build project
+          command: mvn verify sonar:sonar
+      - sonarcloud/scan
+heroku_deploy:
     jobs:
-      - node/test
-  heroku_deploy:
-    jobs:
-      - heroku/deploy-via-git  
+      - heroku/deploy-via-git         
+      - save_cache:
+          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - "node_modules"
+      - run: xvfb-run -a npm run test -- --single-run --no-progress --browser=ChromeNoSandbox
+      - run: xvfb-run -a npm run e2e -- --no-progress --config=protractor-ci.conf.js
+    orbs:
+     sonarcloud: sonarsource/sonarcloud@1.0.1
+
+    workflows:
+      main:
+        jobs:
+          - build:
+              context: SonarCloud
+     
