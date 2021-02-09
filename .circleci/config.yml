@@ -6,12 +6,7 @@ jobs:
       - image: circleci/node:14-browsers
     steps:
       - checkout
-      - restore_cache:
-          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
       - run: npm install
-      - run:
-          name: Install dependencies and build project
-          command: mvn verify sonar:sonar
 
 heroku_deploy:
     jobs:
