@@ -22,7 +22,7 @@ jobs:
           name: build 
           command: npm run build 
       - store_artifacts:
-          path: dist  
+          path: build  
 
 workflows:
   heroku_deploy:
