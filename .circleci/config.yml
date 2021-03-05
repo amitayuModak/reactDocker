@@ -11,9 +11,13 @@ jobs:
     steps:
       - checkout
       # install dependencies
+      - run: mkdir -p /repo/artifacts
       - run:
           name: Install Dependencies
           command: npm install
+      - run: npm test
+      - store_artifacts:
+          path: /repo/artifacts    
 
 workflows:
   heroku_deploy:
