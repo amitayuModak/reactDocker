@@ -19,7 +19,7 @@ jobs:
           paths:
             - ~/repo
       - run:
-          name: test
+          name: build 
           command: npm run build 
       - store_artifacts:
           path: dist  
