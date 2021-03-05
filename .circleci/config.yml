@@ -20,16 +20,9 @@ jobs:
             - ~/repo
       - run:
           name: test
-          command: npm test
-      - run:
-          name: code-coverage
-          command: '~/src --reporter=text-lcov'
+          command: npm run build 
       - store_artifacts:
-          path: test-results.xml
-      - store_artifacts:
-          path: coverage
-      - store_test_results:
-          path: test-results.xml    
+          path: dist  
 
 workflows:
   heroku_deploy:
