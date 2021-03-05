@@ -23,7 +23,7 @@ jobs:
           command: npm test
       - run:
           name: code-coverage
-          command: './src/nyc report --reporter=text-lcov'
+          command: './src --reporter=text-lcov'
       - store_artifacts:
           path: test-results.xml
       - store_artifacts:
