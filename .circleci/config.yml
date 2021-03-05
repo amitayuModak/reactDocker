@@ -7,17 +7,18 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.16.3
-    working_directory: ~/repo
+    working_directory: /home/ubuntu/cci-demo-react
     steps:
       - checkout
-      # install dependencies
-      - run: mkdir -p /repo/artifacts
+    
+      - run: mkdir -p /home/ubuntu/cci-demo-react/artifacts
+        # install dependencies
       - run:
           name: Install Dependencies
           command: npm install
       - run: npm test
       - store_artifacts:
-          path: /repo/artifacts    
+          path: /home/ubuntu/cci-demo-react/artifacts    
 
 workflows:
   heroku_deploy:
