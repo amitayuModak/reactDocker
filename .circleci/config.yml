@@ -13,7 +13,8 @@ jobs:
       # install dependencies
       - run:
           name: Install Dependencies
-          command: npm instal
+          command: npm install
+
 workflows:
   heroku_deploy:
     jobs:
@@ -24,4 +25,3 @@ workflows:
           filters:
             branches:
               only: main
-               
