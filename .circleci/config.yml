@@ -24,6 +24,9 @@ jobs:
           command: npm run build 
       - store_artifacts:
           path: build  
+      - deploy:
+         name: aws
+         command: ssh -i "~/repo/firstec.pem" ubuntu@ec2-13-235-45-232.ap-south-1.compute.amazonaws.com "cd ~/profile-store; git pull; sudo npm install; sudo systemctl restart nginx"    
 
 workflows:
   heroku_deploy:
