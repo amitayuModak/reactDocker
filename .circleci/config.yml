@@ -1,9 +1,5 @@
 version: 2.1
 
-orbs:
-  heroku: circleci/heroku@0.0.10
-  aws-cli: circleci/aws-cli@1.4.0
-
 jobs:
   build:
     docker:
@@ -24,17 +20,11 @@ jobs:
           command: npm run build 
       - store_artifacts:
           path: build  
-      - deploy:
-         name: aws
-         command: ssh -i "~/firstec.pem" ubuntu@ec2-13-235-45-232.ap-south-1.compute.amazonaws.com "cd ~/profile-store; git pull; sudo npm install; sudo systemctl restart nginx"    
+    
 
 workflows:
-  heroku_deploy:
+  main:
     jobs:
-      - build
-      - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
-          requires:
-            - build
-          filters:
-            branches:
-              only: main
+      - build:
+          context: SonarCloud  
+  
